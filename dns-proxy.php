@@ -1,6 +1,6 @@
 <?php
 try {
-        $url = 'https://www.drive.tripathee.us/update?host='.$_GET['host'].'&domain='.$_GET['domain'].'&password='.$_GET['password'].'&ip='.$_GET['ip'];
+        $url = 'https://www.tripathee.us/update?host='.$_GET['host'].'&domain='.$_GET['domain'].'&password='.$_GET['password'].'&ip='.$_GET['ip'];
         $req = curl_init();
         curl_setopt($req, CURLOPT_URL, $url);
         curl_setopt($req, CURLOPT_RETURNTRANSFER, true);
