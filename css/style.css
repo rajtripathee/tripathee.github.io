@@ -599,7 +599,7 @@ body:after {
     max-width: 950px; }
     @media (max-width: 991.98px) {
       .site-blocks-cover .img-face {
-        right: -25%; } }
+        right: -15%; } }
 
 .section-title {
   position: relative;
