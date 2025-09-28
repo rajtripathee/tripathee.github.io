@@ -5,71 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Baby Shower Invitation</title>
   <style>
-    /* Reset & body styling */
     body {
       margin: 0;
       font-family: 'Georgia', serif;
-      background: #f6f3f0; /* Soft neutral background */
+      background: #f5f2ef; /* soft neutral background */
       color: #3e3a39;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      padding: 20px;
+      padding: 15px;
     }
 
-    /* Card container */
     .card {
       background: #ffffff;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      max-width: 600px;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      max-width: 500px;
       width: 100%;
-      padding: 30px;
+      padding: 25px;
       box-sizing: border-box;
       text-align: center;
+      position: relative;
+      overflow: hidden;
     }
 
-    /* Heading */
+    /* Decorative accents (professional Fall + baby boy) */
+    .card::before {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      top: -40px;
+      right: -40px;
+      background: radial-gradient(circle, #89c2f8, #f5f2ef);
+      border-radius: 50%;
+      opacity: 0.2;
+      z-index: 0;
+    }
+
     h1 {
       font-size: 2em;
       margin-top: 0;
-      color: #5b3a29; /* Warm brown */
+      color: #5b3a29;
+      z-index: 1;
+      position: relative;
     }
 
-    /* Paragraphs */
     p {
       font-size: 1em;
       line-height: 1.5em;
-      margin: 10px 0;
+      margin: 8px 0;
+      z-index: 1;
+      position: relative;
     }
 
-    /* Registry link */
     a.registry {
       display: inline-block;
       margin: 20px 0;
       padding: 12px 25px;
-      background: #5b3a29;
+      background: #5b3a29; /* warm Fall brown */
       color: #fff;
       text-decoration: none;
       font-weight: bold;
       border-radius: 8px;
       transition: background 0.3s;
+      position: relative;
+      z-index: 1;
     }
     a.registry:hover {
       background: #7a503b;
     }
 
-    /* RSVP form */
     form {
       margin-top: 20px;
       text-align: left;
+      position: relative;
+      z-index: 1;
     }
+
     label {
       display: block;
       margin: 10px 0 5px;
       font-weight: bold;
     }
+
     input, select, textarea, button {
       width: 100%;
       padding: 10px;
@@ -79,7 +99,6 @@
       font-size: 1em;
       box-sizing: border-box;
     }
-    textarea { resize: vertical; }
 
     button {
       background: #5b3a29;
@@ -88,37 +107,23 @@
       cursor: pointer;
       transition: background 0.3s;
     }
+
     button:hover {
       background: #7a503b;
     }
 
-    /* Hide sections initially */
-    .hidden {
-      display: none;
-    }
+    .hidden { display: none; }
 
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      h1 { font-size: 1.6em; }
+    @media (max-width: 500px) {
       .card { padding: 20px; }
-    }
-
-    /* Subtle decorative accent for card */
-    .card::before {
-      content: "";
-      display: block;
-      width: 80px;
-      height: 5px;
-      margin: 0 auto 20px auto;
-      background: linear-gradient(90deg, #f2c94c, #f2994a);
-      border-radius: 3px;
+      h1 { font-size: 1.6em; }
     }
   </style>
 </head>
 <body>
   <div class="card">
     <h1>Baby Shower Invitation</h1>
-    <p>We are delighted to invite you to celebrate our baby boy this Fall!</p>
+    <p>We are thrilled to invite you to celebrate our baby boy this Fall!</p>
     <p><strong>Date:</strong> November 10, 2025<br>
        <strong>Time:</strong> 2:00 PM<br>
        <strong>Location:</strong> Sunnyvale, CA</p>
@@ -144,7 +149,7 @@
 
       <div id="noFields" class="hidden">
         <label for="message">Message:</label>
-        <textarea name="message" id="message" rows="3" placeholder="Sorry we can’t make it, sending love!"></textarea>
+        <textarea name="message" id="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
       </div>
 
       <button type="submit">Submit RSVP</button>
