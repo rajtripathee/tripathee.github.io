@@ -2,84 +2,128 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Pemala's Baby Shower Invitation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Baby Shower Invitation</title>
   <style>
+    /* Reset & body styling */
     body {
+      margin: 0;
       font-family: 'Georgia', serif;
-      background: linear-gradient(to bottom, #fdf6e3, #fce5cd);
-      color: #4b2e2e;
-      text-align: center;
-      padding: 30px;
-      background-image: url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f341.png'),
-                        url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f383.png'),
-                        url('https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/72x72/1f476.png');
-      background-repeat: repeat;
-      background-size: 60px;
-    }
-    h1 {
-      font-size: 2.2em;
-      color: #8b4513;
-      margin-top: 0;
-    }
-    .card {
-      background: #fffaf3;
-      border: 3px solid #d2691e;
-      border-radius: 15px;
+      background: #f6f3f0; /* Soft neutral background */
+      color: #3e3a39;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
       padding: 20px;
-      max-width: 600px;
-      margin: 20px auto;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
     }
+
+    /* Card container */
+    .card {
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      max-width: 600px;
+      width: 100%;
+      padding: 30px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+
+    /* Heading */
+    h1 {
+      font-size: 2em;
+      margin-top: 0;
+      color: #5b3a29; /* Warm brown */
+    }
+
+    /* Paragraphs */
+    p {
+      font-size: 1em;
+      line-height: 1.5em;
+      margin: 10px 0;
+    }
+
+    /* Registry link */
     a.registry {
       display: inline-block;
-      margin: 15px 0;
-      padding: 12px 22px;
-      background: #d2691e;
-      color: white;
+      margin: 20px 0;
+      padding: 12px 25px;
+      background: #5b3a29;
+      color: #fff;
       text-decoration: none;
-      border-radius: 8px;
       font-weight: bold;
+      border-radius: 8px;
+      transition: background 0.3s;
     }
     a.registry:hover {
-      background: #a0522d;
+      background: #7a503b;
     }
+
+    /* RSVP form */
     form {
       margin-top: 20px;
+      text-align: left;
     }
     label {
       display: block;
       margin: 10px 0 5px;
+      font-weight: bold;
     }
     input, select, textarea, button {
+      width: 100%;
       padding: 10px;
-      margin: 5px;
+      margin: 5px 0 15px;
       border-radius: 6px;
       border: 1px solid #ccc;
-      width: 80%;
-      max-width: 400px;
+      font-size: 1em;
+      box-sizing: border-box;
     }
+    textarea { resize: vertical; }
+
     button {
-      background: #8b4513;
-      color: white;
+      background: #5b3a29;
+      color: #fff;
+      border: none;
       cursor: pointer;
+      transition: background 0.3s;
     }
     button:hover {
-      background: #5c3317;
+      background: #7a503b;
     }
+
+    /* Hide sections initially */
     .hidden {
       display: none;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.6em; }
+      .card { padding: 20px; }
+    }
+
+    /* Subtle decorative accent for card */
+    .card::before {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 5px;
+      margin: 0 auto 20px auto;
+      background: linear-gradient(90deg, #f2c94c, #f2994a);
+      border-radius: 3px;
     }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>🍂 Pemala's Baby Shower Invitation 🍂</h1>
-    <p>We are excited to invite you to celebrate our baby boy this Fall!</p>
-    <p><strong>Date:</strong> November 1, 2025<br>
+    <h1>Baby Shower Invitation</h1>
+    <p>We are delighted to invite you to celebrate our baby boy this Fall!</p>
+    <p><strong>Date:</strong> November 10, 2025<br>
        <strong>Time:</strong> 2:00 PM<br>
-       <strong>Location:</strong> Carlsbad, CA</p>
+       <strong>Location:</strong> Sunnyvale, CA</p>
 
-    <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">🎁 View Baby Registry</a>
+    <a href="https://your-baby-registry-link.com" class="registry" target="_blank">View Baby Registry</a>
 
     <h2>RSVP</h2>
     <form id="rsvpForm" action="https://formspree.io/f/yourFormID" method="POST">
@@ -92,15 +136,15 @@
 
       <div id="yesFields" class="hidden">
         <label for="name">Your Name:</label>
-        <input type="text" name="name" id="name">
+        <input type="text" name="name" id="name" placeholder="Full name">
 
         <label for="guests">Number of People Attending:</label>
-        <input type="number" name="guests" id="guests" min="1">
+        <input type="number" name="guests" id="guests" min="1" placeholder="1">
       </div>
 
       <div id="noFields" class="hidden">
         <label for="message">Message:</label>
-        <textarea name="message" id="message" rows="3" placeholder="Sorry we can’t make it, but sending love!"></textarea>
+        <textarea name="message" id="message" rows="3" placeholder="Sorry we can’t make it, sending love!"></textarea>
       </div>
 
       <button type="submit">Submit RSVP</button>
