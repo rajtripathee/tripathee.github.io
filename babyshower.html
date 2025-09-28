@@ -10,6 +10,11 @@
       color: #4b2e2e;
       text-align: center;
       padding: 30px;
+      background-image: url('https://i.ibb.co/mTKhQX7/fall-leaves.png'),
+                        url('https://i.ibb.co/qNBnLzn/pumpkin.png'),
+                        url('https://i.ibb.co/WFrn6J0/baby-clothes.png');
+      background-repeat: repeat, repeat, repeat;
+      background-size: 150px, 100px, 120px;
     }
     h1 {
       font-size: 2.5em;
@@ -20,18 +25,19 @@
       border: 3px solid #d2691e;
       border-radius: 15px;
       padding: 30px;
-      max-width: 600px;
+      max-width: 650px;
       margin: 20px auto;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.15);
     }
     a.registry {
       display: inline-block;
       margin: 15px 0;
-      padding: 10px 20px;
+      padding: 12px 22px;
       background: #d2691e;
       color: white;
       text-decoration: none;
       border-radius: 8px;
+      font-weight: bold;
     }
     a.registry:hover {
       background: #a0522d;
@@ -39,11 +45,17 @@
     form {
       margin-top: 20px;
     }
-    input, button {
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input, select, textarea, button {
       padding: 10px;
-      margin: 8px;
+      margin: 5px;
       border-radius: 6px;
       border: 1px solid #ccc;
+      width: 80%;
+      max-width: 400px;
     }
     button {
       background: #8b4513;
@@ -52,6 +64,9 @@
     }
     button:hover {
       background: #5c3317;
+    }
+    .hidden {
+      display: none;
     }
   </style>
 </head>
@@ -63,15 +78,51 @@
        <strong>Time:</strong> 2:00 PM<br>
        <strong>Location:</strong> Sunnyvale, CA</p>
 
-    <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
+    <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">🎁 View Baby Registry</a>
 
     <h2>RSVP</h2>
-    <!-- Google Form Embed (replace with your own) -->
-    <iframe src="https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform?embedded=true" width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+    <form id="rsvpForm" action="https://formspree.io/f/yourFormID" method="POST">
+      <label>Will you attend?</label>
+      <select id="attendance" name="attendance" required>
+        <option value="">-- Please choose --</option>
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+      </select>
 
-    <p style="margin-top:20px; font-size:0.9em; color:#555;">
-      RSVP summary will be automatically collected in Google Sheets.
-    </p>
+      <div id="yesFields" class="hidden">
+        <label for="name">Your Name:</label>
+        <input type="text" name="name" id="name">
+
+        <label for="guests">Number of People Attending:</label>
+        <input type="number" name="guests" id="guests" min="1">
+      </div>
+
+      <div id="noFields" class="hidden">
+        <label for="message">Message:</label>
+        <textarea name="message" id="message" rows="3" placeholder="Sorry we can’t make it, but sending love!"></textarea>
+      </div>
+
+      <button type="submit">Submit RSVP</button>
+    </form>
   </div>
+
+  <script>
+    const attendance = document.getElementById('attendance');
+    const yesFields = document.getElementById('yesFields');
+    const noFields = document.getElementById('noFields');
+
+    attendance.addEventListener('change', function() {
+      if (this.value === 'yes') {
+        yesFields.classList.remove('hidden');
+        noFields.classList.add('hidden');
+      } else if (this.value === 'no') {
+        noFields.classList.remove('hidden');
+        yesFields.classList.add('hidden');
+      } else {
+        yesFields.classList.add('hidden');
+        noFields.classList.add('hidden');
+      }
+    });
+  </script>
 </body>
 </html>
