@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Baby Shower Invitation</title>
+</head>
+<body>
+  <h1>You're Invited!</h1>
+  <p>Date: November 10, 2025</p>
+  <p>Location: Sunnyvale, CA</p>
+
+  <h2>RSVP</h2>
+  <form action="https://formspree.io/f/yourFormID" method="POST">
+    <label>Name: <input type="text" name="name" required></label><br>
+    <label>Guests: <input type="number" name="guests" min="1"></label><br>
+    <label>Will you attend?</label>
+    <select name="attendance">
+      <option value="yes">Yes</option>
+      <option value="no">No</option>
+    </select><br><br>
+    <button type="submit">Send RSVP</button>
+  </form>
+</body>
+</html>
