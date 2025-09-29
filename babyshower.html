@@ -21,14 +21,21 @@ body {
 
 /* Card image */
 .card {
-  width: 100%;
-  max-width: 500px;
-  height: 300px;
+  width: 60vw;       /* 60% of viewport width */
+  height: 50vh;      /* 50% of viewport height */
+  max-width: 700px;  /* optional max-width to avoid being too wide */
   border-radius: 20px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.2);
   background: url('images/card3.jpeg') no-repeat center center;
   background-size: cover;
-  margin-bottom: 30px; /* spacing between card and form */
+  margin-bottom: 40px;
+}
+
+@media (max-width: 500px) {
+  .card {
+    width: 90vw;     /* almost full screen width */
+    height: 40vh;    /* smaller height on mobile */
+  }
 }
 
 /* RSVP container */
