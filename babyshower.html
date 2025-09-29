@@ -20,7 +20,7 @@ body {
 }
 
 .card {
-  background: url('images/card3.jpeg') no-repeat center center fixed;
+  background: url('images/card3.jpeg') no-repeat center center;
   background-size: cover;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.12);
@@ -31,6 +31,7 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
+  color: #fff;
 }
 
 .card::before {
@@ -45,6 +46,19 @@ body {
   opacity: 0.2;
   z-index: 0;
   pointer-events: none;
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.25); /* semi-transparent black overlay */
+  z-index: 0;
+}
+
+.card > * {
+  position: relative; /* ensures content sits above overlay */
+  z-index: 1;
 }
 
 h1 {
