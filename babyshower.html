@@ -133,57 +133,65 @@
     <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
 
     <h2>RSVP</h2>
-    <form id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdmra4BKpkR_aNRuqNctDWV6JaHbQqJF_WDFirU9y7sBWCJZQ/formResponse" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+    <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbwMJ80s0o4CGTIjj22Td3IqbCSnUiMQrONLCNHAMic7xqB4VS767PDhMnr37X8-cDAb/exec">
       <label>Will you attend?</label>
-      <select id="attendance" name="entry.111111111" required>
+      <select id="attendance" name="attendance" required>
         <option value="">-- Please choose --</option>
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
       </select>
 
       <div id="yesFields" class="hidden">
         <label for="nameYes">Your Name:</label>
-        <input type="text" name="entry.222222222" id="nameYes" placeholder="Full name" required>
+        <input type="text" name="name" placeholder="Full name">
 
         <label for="guests">Number of People Attending:</label>
-        <input type="number" name="entry.333333333" id="guests" min="1" placeholder="1">
+        <input type="number" name="guests" min="1" placeholder="1">
       </div>
 
       <div id="noFields" class="hidden">
         <label for="nameNo">Your Name:</label>
-        <input type="text" name="entry.444444444" id="nameNo" placeholder="Full name" required>
+        <input type="text" name="name" placeholder="Full name">
 
         <label for="message">Message:</label>
-        <textarea name="entry.555555555" id="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
+        <textarea name="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
       </div>
 
       <button type="submit">Submit RSVP</button>
     </form>
   </div>
 
-  <script>
-    const attendance = document.getElementById('attendance');
-    const yesFields = document.getElementById('yesFields');
-    const noFields = document.getElementById('noFields');
 
-    attendance.addEventListener('change', function() {
-    if (this.value === 'Yes') {
-      yesFields.classList.remove('hidden');
-      noFields.classList.add('hidden');
-      document.getElementById('nameYes').required = true;
-      document.getElementById('nameNo').required = false;
-    } else if (this.value === 'No') {
-      noFields.classList.remove('hidden');
-      yesFields.classList.add('hidden');
-      document.getElementById('nameNo').required = true;
-      document.getElementById('nameYes').required = false;
-    } else {
-      yesFields.classList.add('hidden');
-      noFields.classList.add('hidden');
-      document.getElementById('nameYes').required = false;
-      document.getElementById('nameNo').required = false;
-    }
-  });
+  <script>
+    // Toggle Yes/No fields
+    document.getElementById("attendance").addEventListener("change", function() {
+      document.getElementById("yesFields").classList.add("hidden");
+      document.getElementById("noFields").classList.add("hidden");
+
+      if (this.value === "Yes") {
+        document.getElementById("yesFields").classList.remove("hidden");
+      } else if (this.value === "No") {
+        document.getElementById("noFields").classList.remove("hidden");
+      }
+    });
+
+    // Handle form submission
+    document.getElementById("rsvpForm").addEventListener("submit", async function(event) {
+      event.preventDefault();
+      const form = event.target;
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      await fetch(form.action, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: { "Content-Type": "application/json" }
+      });
+
+      alert("Thank you! Your RSVP has been recorded.");
+      form.reset();
+      document.getElementById("yesFields").classList.add("hidden");
+      document.getElementById("noFields").classList.add("hidden");
+    });
   </script>
 </body>
 </html>
