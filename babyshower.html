@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Baby Shower Invitation</title>
 <style>
+/* Body & page layout */
 body {
   margin: 0;
   font-family: 'Georgia', serif;
@@ -12,126 +13,90 @@ body {
   background-size: cover;
   color: #3e3a39;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  padding: 20px;
   min-height: 100vh;
-  padding: 15px;
-  overflow-y: auto;
 }
 
+/* Card image */
 .card {
-  background: url('images/card3.jpeg') no-repeat center center;
-  background-size: cover;
+  width: 100%;
+  max-width: 500px;
+  height: 300px;
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+  background: url('images/card3.jpeg') no-repeat center center;
+  background-size: cover;
+  margin-bottom: 30px; /* spacing between card and form */
+}
+
+/* RSVP container */
+.rsvp-container {
+  width: 100%;
   max-width: 500px;
-  width: 100%;
-  height: 300px;
-  padding: 25px;
-  box-sizing: border-box;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  color: #fff;
+  background: rgba(255,255,255,0.9); /* optional light background */
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  width: 120px;
-  height: 120px;
-  top: -40px;
-  right: -40px;
-  background: radial-gradient(circle, #ffa07a, #ffd7b3);
-  border-radius: 50%;
-  opacity: 0.2;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.card::after {
-  content: "";
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.25); /* semi-transparent black overlay */
-  z-index: 0;
-}
-
-.card > * {
-  position: relative; /* ensures content sits above overlay */
-  z-index: 1;
-}
-
-h1 {
-  font-size: 2em;
-  margin-top: 0;
-  color: #1E90FF; /* Dodger Blue */
-  font-family: 'Brush Script MT', cursive; /* Cursive font */
-  z-index: 1;
-  position: relative;
-}
-
-p { font-size: 1em; line-height: 1.5em; margin: 8px 0; z-index: 1; position: relative; }
-
-a.registry {
-  display: inline-block;
-  margin: 20px 0;
-  padding: 12px 25px;
-  background: #786c3b;
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
-  border-radius: 8px;
-  transition: background 0.3s;
-  position: relative;
-  z-index: 1;
-}
-
-a.registry:hover { background: #a67f59; }
-
+/* Form styling */
 form {
-  margin-top: 20px;
-  text-align: left;
-  position: relative;
-  z-index: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-label { display: block; margin: 10px 0 5px; font-weight: bold; }
+label {
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
 
-input, select, textarea, button {
-  width: 100%;
+input, select, textarea {
   padding: 10px;
-  margin: 5px 0 15px;
+  margin-bottom: 15px;
   border-radius: 6px;
   border: 1px solid #ccc;
   font-size: 1em;
   box-sizing: border-box;
+  width: 100%;
 }
 
-button {
+button[type="submit"] {
   background: #786c3b;
   color: #fff;
   border: none;
   cursor: pointer;
+  padding: 12px 25px;
+  font-size: 1em;
+  border-radius: 8px;
   transition: background 0.3s;
 }
 
-button:hover { background: #a67f59; }
+button[type="submit"]:hover {
+  background: #a67f59;
+}
 
+/* Hidden fields logic */
 .hidden { display: none; }
 
+/* Responsive tweaks */
 @media (max-width: 500px) {
-  .card { padding: 20px; }
-  h1 { font-size: 1.6em; }
+  .card { height: 250px; }
+  .rsvp-container { padding: 15px; }
 }
 </style>
 </head>
 <body>
-<div class="card">
-  <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
 
-  <h2>RSVP</h2>
+<!-- Decorative Card -->
+<div class="card"></div>
+
+<!-- RSVP Form Container -->
+<div class="rsvp-container">
+  <h2 style="text-align:center; margin-bottom:15px;">RSVP</h2>
   <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
   <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbxykXP626vY0K-MvtWrLpTZ0Y4mKYo-A181ZieWQMjS7mgkF1KuX2I91n4G9Sx3otDe3Q/exec" method="POST" target="hidden_iframe">
     <label>Will you attend?</label>
     <select id="attendance" name="attendance" required>
@@ -155,47 +120,51 @@ button:hover { background: #a67f59; }
     </div>
 
     <button type="submit">Submit RSVP</button>
-    
   </form>
-  <div id="thankyou" style="display:none; margin-top:12px; padding:12px; background:#eaf7ea; border-radius:8px; color:#2b662b; font-weight:bold;">
-  Thank you — your RSVP has been recorded!
+
+  <div id="thankyou" style="display:none; margin-top:12px; padding:12px; background:#eaf7ea; border-radius:8px; color:#2b662b; font-weight:bold; text-align:center;">
+    Thank you — your RSVP has been recorded!
+  </div>
 </div>
 
 <script>
-  // toggle visibility + required handling
-  const attendance = document.getElementById('attendance');
-  const yesFields = document.getElementById('yesFields');
-  const noFields = document.getElementById('noFields');
-  const nameYes = document.getElementById('nameYes');
-  const nameNo = document.getElementById('nameNo');
-  function updateVisibility(){
-    yesFields.classList.add('hidden');
-    noFields.classList.add('hidden');
-    nameYes.required = false;
-    nameNo.required = false;
-    if(attendance.value === 'Yes'){ yesFields.classList.remove('hidden'); nameYes.required=true; }
-    if(attendance.value === 'No'){ noFields.classList.remove('hidden'); nameNo.required=true; }
-  }
-  attendance.addEventListener('change', updateVisibility);
-  updateVisibility();
+// Toggle visibility of Yes/No fields
+const attendance = document.getElementById('attendance');
+const yesFields = document.getElementById('yesFields');
+const noFields = document.getElementById('noFields');
+const nameYes = document.getElementById('nameYes');
+const nameNo = document.getElementById('nameNo');
 
-  // show thank-you when hidden iframe loads after POST
-  const form = document.getElementById('rsvpForm');
-  const iframe = document.getElementById('hidden_iframe');
-  const thankyou = document.getElementById('thankyou');
-  let justSubmitted = false;
-  form.addEventListener('submit', function(){ justSubmitted = true; });
-  iframe.addEventListener('load', function(){
-    if(!justSubmitted) return;
-    justSubmitted = false;
-    // small delay to let server finish
-    setTimeout(()=> {
-      thankyou.style.display = 'block';
-      form.reset();
-      updateVisibility();
-      setTimeout(()=> { thankyou.style.display = 'none'; }, 4000);
-    }, 250);
-  });
+function updateVisibility(){
+  yesFields.classList.add('hidden');
+  noFields.classList.add('hidden');
+  nameYes.required = false;
+  nameNo.required = false;
+  if(attendance.value === 'Yes'){ yesFields.classList.remove('hidden'); nameYes.required=true; }
+  if(attendance.value === 'No'){ noFields.classList.remove('hidden'); nameNo.required=true; }
+}
+
+attendance.addEventListener('change', updateVisibility);
+updateVisibility();
+
+// Show thank-you message after submit
+const form = document.getElementById('rsvpForm');
+const iframe = document.getElementById('hidden_iframe');
+const thankyou = document.getElementById('thankyou');
+let justSubmitted = false;
+
+form.addEventListener('submit', function(){ justSubmitted = true; });
+iframe.addEventListener('load', function(){
+  if(!justSubmitted) return;
+  justSubmitted = false;
+  setTimeout(()=> {
+    thankyou.style.display = 'block';
+    form.reset();
+    updateVisibility();
+    setTimeout(()=> { thankyou.style.display = 'none'; }, 4000);
+  }, 250);
+});
 </script>
+
 </body>
 </html>
