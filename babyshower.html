@@ -17,8 +17,9 @@ body {
   min-height: 100vh;
   padding: 15px;
 }
+
 .card {
-  background: #fff2e6;
+  background: rgba(255, 242, 230, 0.95); /* Slightly transparent for background visibility */
   border-radius: 20px;
   box-shadow: 0 8px 25px rgba(0,0,0,0.12);
   max-width: 500px;
@@ -29,6 +30,7 @@ body {
   position: relative;
   overflow: hidden;
 }
+
 .card::before {
   content: "";
   position: absolute;
@@ -41,23 +43,35 @@ body {
   opacity: 0.2;
   z-index: 0;
 }
+
 h1 { font-size: 2em; margin-top: 0; color: #786c3b; z-index: 1; position: relative; }
+h2 { font-size: 1.5em; z-index: 1; position: relative; }
 p { font-size: 1em; line-height: 1.5em; margin: 8px 0; z-index: 1; position: relative; }
+
 a.registry {
   display: inline-block; margin: 20px 0; padding: 12px 25px;
   background: #786c3b; color: #fff; text-decoration: none; font-weight: bold;
   border-radius: 8px; transition: background 0.3s; position: relative; z-index: 1;
 }
 a.registry:hover { background: #a67f59; }
+
 form { margin-top: 20px; text-align: left; position: relative; z-index: 1; }
 label { display: block; margin: 10px 0 5px; font-weight: bold; }
 input, select, textarea, button { width: 100%; padding: 10px; margin: 5px 0 15px; border-radius: 6px; border: 1px solid #ccc; font-size: 1em; box-sizing: border-box; }
 button { background: #786c3b; color: #fff; border: none; cursor: pointer; transition: background 0.3s; }
 button:hover { background: #a67f59; }
 .hidden { display: none; }
-@media (max-width: 500px) {
-  .card { padding: 20px; }
-  h1 { font-size: 1.6em; }
+
+/* Mobile responsive adjustments */
+@media (max-width: 600px) {
+  body { padding: 10px; }
+  .card { padding: 20px; max-width: 100%; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+  h1 { font-size: 1.8em; }
+  h2 { font-size: 1.3em; }
+  p { font-size: 0.95em; }
+  input, select, textarea, button { font-size: 1em; padding: 12px; }
+  a.registry { padding: 10px 20px; font-size: 0.95em; }
+  .card::before { width: 80px; height: 80px; top: -30px; right: -30px; }
 }
 </style>
 </head>
@@ -71,77 +85,42 @@ button:hover { background: #a67f59; }
 
   <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
 
-<h2>RSVP</h2>
-<form id="rsvpForm" action="https://formspree.io/f/mdkweleg" method="POST">
-  <label>Will you attend?</label>
-  <select id="attendance" name="attendance" required>
-    <option value="">-- Please choose --</option>
-    <option value="Yes">Yes</option>
-    <option value="No">No</option>
-  </select>
+  <h2>RSVP</h2>
+  <form id="rsvpForm">
+    <label>Will you attend?</label>
+    <select id="attendance" name="attendance" required>
+      <option value="">-- Please choose --</option>
+      <option value="Yes">Yes</option>
+      <option value="No">No</option>
+    </select>
 
-  <div id="yesFields" class="hidden">
-    <label for="nameYes">Your Name:</label>
-    <input type="text" name="nameYes" placeholder="Full name" required>
+    <div id="yesFields" class="hidden">
+      <label for="nameYes">Your Name:</label>
+      <input type="text" name="nameYes" placeholder="Full name" required>
 
-    <label for="guests">Number of People Attending:</label>
-    <input type="number" name="guests" min="1" placeholder="1">
-  </div>
+      <label for="guests">Number of People Attending:</label>
+      <input type="number" name="guests" min="1" placeholder="1">
+    </div>
 
-  <div id="noFields" class="hidden">
-    <label for="nameNo">Your Name:</label>
-    <input type="text" name="nameNo" placeholder="Full name" required>
+    <div id="noFields" class="hidden">
+      <label for="nameNo">Your Name:</label>
+      <input type="text" name="nameNo" placeholder="Full name" required>
 
-    <label for="message">Message:</label>
-    <textarea name="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
-  </div>
+      <label for="message">Message:</label>
+      <textarea name="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
+    </div>
 
-  <button type="submit">Submit RSVP</button>
-</form>
+    <button type="submit">Submit RSVP</button>
+  </form>
 </div>
 
 <script>
-// Toggle Yes/No fields
 const attendance = document.getElementById("attendance");
 attendance.addEventListener("change", function() {
   document.getElementById("yesFields").classList.add("hidden");
   document.getElementById("noFields").classList.add("hidden");
-  if (this.value === "Yes") document.getElementById("yesFields").classList.remove("hidden");
-  if (this.value === "No") document.getElementById("noFields").classList.remove("hidden");
-});
-
-// Handle form submission with fetch
-document.getElementById("rsvpForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  const form = this;
-  const formData = new FormData(form);
-
-  // Choose the correct name field
-  const nameValue = formData.get("nameYes") || formData.get("nameNo");
-
-  const data = {
-    name: nameValue,
-    attendance: formData.get("attendance"),
-    guests: formData.get("guests") || "",
-    message: formData.get("message") || ""
-  };
-
-  fetch(form.action, {
-    method: "POST",
-    body: new FormData(form),
-    headers: { 'Accept': 'application/json' }
-  })
-  .then(response => {
-    if (response.ok) {
-      alert("Thank you! Your RSVP has been recorded.");
-      form.reset();
-      document.getElementById("yesFields").classList.add("hidden");
-      document.getElementById("noFields").classList.add("hidden");
-    } else {
-      alert("Oops! There was a problem submitting your RSVP.");
-    }
-  })
-  .catch(() => alert("Oops! There was a problem submitting your RSVP."));
+  if(this.value === "Yes") document.getElementById("yesFields").classList.remove("hidden");
+  if(this.value === "No") document.getElementById("noFields").classList.remove("hidden");
 });
 </script>
 </body>
