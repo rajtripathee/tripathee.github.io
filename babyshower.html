@@ -101,9 +101,30 @@ button:hover { background: #a67f59; }
 </div>
 
 <script>
-document.getElementById("rsvpForm").addEventListener("submit", function(event){
-  event.preventDefault(); // stop default submission
+// Toggle Yes/No fields
+const attendance = document.getElementById("attendance");
+attendance.addEventListener("change", function() {
+  document.getElementById("yesFields").classList.add("hidden");
+  document.getElementById("noFields").classList.add("hidden");
+  if (this.value === "Yes") document.getElementById("yesFields").classList.remove("hidden");
+  if (this.value === "No") document.getElementById("noFields").classList.remove("hidden");
+});
+
+// Handle form submission with fetch
+document.getElementById("rsvpForm").addEventListener("submit", function(event) {
+  event.preventDefault();
   const form = this;
+  const formData = new FormData(form);
+
+  // Choose the correct name field
+  const nameValue = formData.get("nameYes") || formData.get("nameNo");
+
+  const data = {
+    name: nameValue,
+    attendance: formData.get("attendance"),
+    guests: formData.get("guests") || "",
+    message: formData.get("message") || ""
+  };
 
   fetch(form.action, {
     method: "POST",
