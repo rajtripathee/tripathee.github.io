@@ -133,28 +133,28 @@
     <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
 
     <h2>RSVP</h2>
-    <form id="rsvpForm" action="https://formspree.io/f/yourFormID" method="POST">
+    <form id="rsvpForm" action="https://docs.google.com/forms/d/e/1FAIpQLSdmra4BKpkR_aNRuqNctDWV6JaHbQqJF_WDFirU9y7sBWCJZQ/formResponse" method="POST" target="_blank">
       <label>Will you attend?</label>
-      <select id="attendance" name="attendance" required>
+      <select id="attendance" name="entry.111111111" required>
         <option value="">-- Please choose --</option>
         <option value="yes">Yes</option>
         <option value="no">No</option>
       </select>
 
       <div id="yesFields" class="hidden">
-        <label for="name">Your Name:</label>
-        <input type="text" name="name" id="name" placeholder="Full name" required>
+        <label for="nameYes">Your Name:</label>
+        <input type="text" name="entry.222222222" id="nameYes" placeholder="Full name" required>
 
         <label for="guests">Number of People Attending:</label>
-        <input type="number" name="guests" id="guests" min="1" placeholder="1">
+        <input type="number" name="entry.333333333" id="guests" min="1" placeholder="1">
       </div>
 
       <div id="noFields" class="hidden">
-        <label for="name">Your Name:</label>
-        <input type="text" name="name" id="name" placeholder="Full name" required>
+        <label for="nameNo">Your Name:</label>
+        <input type="text" name="entry.444444444" id="nameNo" placeholder="Full name" required>
 
         <label for="message">Message:</label>
-        <textarea name="message" id="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
+        <textarea name="entry.555555555" id="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
       </div>
 
       <button type="submit">Submit RSVP</button>
@@ -167,17 +167,23 @@
     const noFields = document.getElementById('noFields');
 
     attendance.addEventListener('change', function() {
-      if (this.value === 'yes') {
-        yesFields.classList.remove('hidden');
-        noFields.classList.add('hidden');
-      } else if (this.value === 'no') {
-        noFields.classList.remove('hidden');
-        yesFields.classList.add('hidden');
-      } else {
-        yesFields.classList.add('hidden');
-        noFields.classList.add('hidden');
-      }
-    });
+    if (this.value === 'Yes') {
+      yesFields.classList.remove('hidden');
+      noFields.classList.add('hidden');
+      document.getElementById('nameYes').required = true;
+      document.getElementById('nameNo').required = false;
+    } else if (this.value === 'No') {
+      noFields.classList.remove('hidden');
+      yesFields.classList.add('hidden');
+      document.getElementById('nameNo').required = true;
+      document.getElementById('nameYes').required = false;
+    } else {
+      yesFields.classList.add('hidden');
+      noFields.classList.add('hidden');
+      document.getElementById('nameYes').required = false;
+      document.getElementById('nameNo').required = false;
+    }
+  });
   </script>
 </body>
 </html>
