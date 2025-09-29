@@ -16,6 +16,7 @@ body {
   align-items: center;
   min-height: 100vh;
   padding: 15px;
+  overflow-y: auto;
 }
 
 .card {
@@ -42,6 +43,7 @@ body {
   border-radius: 50%;
   opacity: 0.2;
   z-index: 0;
+  pointer-events: none;
 }
 
 h1 {
@@ -119,6 +121,7 @@ button:hover { background: #a67f59; }
   <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
 
   <h2>RSVP</h2>
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
   <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbxykXP626vY0K-MvtWrLpTZ0Y4mKYo-A181ZieWQMjS7mgkF1KuX2I91n4G9Sx3otDe3Q/exec" method="POST" target="hidden_iframe">
     <label>Will you attend?</label>
     <select id="attendance" name="attendance" required>
@@ -129,16 +132,14 @@ button:hover { background: #a67f59; }
 
     <div id="yesFields" class="hidden">
       <label for="nameYes">Your Name:</label>
-      <input type="text" name="nameYes" placeholder="Full name" required>
-
+      <input type="text" id="nameYes" name="nameYes" placeholder="Full name" required>
       <label for="guests">Number of People Attending:</label>
-      <input type="number" name="guests" min="1" placeholder="1">
+      <input type="number" id="guests" name="guests" min="1" placeholder="1">
     </div>
 
     <div id="noFields" class="hidden">
       <label for="nameNo">Your Name:</label>
-      <input type="text" name="nameNo" placeholder="Full name" required>
-
+      <input type="text" id="nameNo" name="nameNo" placeholder="Full name" required>
       <label for="message">Message:</label>
       <textarea name="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
     </div>
@@ -146,58 +147,44 @@ button:hover { background: #a67f59; }
     <button type="submit">Submit RSVP</button>
     
   </form>
-  <div id="thankyou">Thank you — your RSVP has been recorded!</div>
+  <div id="thankyou" style="display:none; margin-top:12px; padding:12px; background:#eaf7ea; border-radius:8px; color:#2b662b; font-weight:bold;">
+  Thank you — your RSVP has been recorded!
 </div>
 
 <script>
-  // toggle fields + set required appropriately
+  // toggle visibility + required handling
   const attendance = document.getElementById('attendance');
   const yesFields = document.getElementById('yesFields');
   const noFields = document.getElementById('noFields');
   const nameYes = document.getElementById('nameYes');
   const nameNo = document.getElementById('nameNo');
-
-  function updateVisibility() {
+  function updateVisibility(){
     yesFields.classList.add('hidden');
     noFields.classList.add('hidden');
     nameYes.required = false;
     nameNo.required = false;
-    if (attendance.value === 'Yes') {
-      yesFields.classList.remove('hidden');
-      nameYes.required = true;
-    } else if (attendance.value === 'No') {
-      noFields.classList.remove('hidden');
-      nameNo.required = true;
-    }
+    if(attendance.value === 'Yes'){ yesFields.classList.remove('hidden'); nameYes.required=true; }
+    if(attendance.value === 'No'){ noFields.classList.remove('hidden'); nameNo.required=true; }
   }
   attendance.addEventListener('change', updateVisibility);
   updateVisibility();
 
-  // submit into hidden iframe and show confirmation when iframe loads
+  // show thank-you when hidden iframe loads after POST
   const form = document.getElementById('rsvpForm');
   const iframe = document.getElementById('hidden_iframe');
   const thankyou = document.getElementById('thankyou');
   let justSubmitted = false;
-
-  form.addEventListener('submit', function(e) {
-    // allow the browser to validate required fields naturally (no preventDefault)
-    justSubmitted = true;
-    // optionally show a small loading state here (disabled button etc)
-  });
-
-  // iframe load fires when the response from Apps Script arrives
-  iframe.addEventListener('load', function() {
-    if (!justSubmitted) return;
+  form.addEventListener('submit', function(){ justSubmitted = true; });
+  iframe.addEventListener('load', function(){
+    if(!justSubmitted) return;
     justSubmitted = false;
-
-    // small delay to ensure response processed on server
-    setTimeout(function() {
+    // small delay to let server finish
+    setTimeout(()=> {
       thankyou.style.display = 'block';
       form.reset();
       updateVisibility();
-      // hide confirmation after 4 seconds
-      setTimeout(() => { thankyou.style.display = 'none'; }, 4000);
-    }, 300);
+      setTimeout(()=> { thankyou.style.display = 'none'; }, 4000);
+    }, 250);
   });
 </script>
 </body>
