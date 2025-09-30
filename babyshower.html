@@ -9,7 +9,6 @@
 body {
   margin: 0;
   font-family: 'Georgia', serif;
-  /* lighter background using semi-transparent overlay */
   background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url('images/babyshowerbackground.jpeg') no-repeat center center fixed;
   background-size: cover;
   color: #3e3a39;
@@ -27,7 +26,8 @@ body {
   border-radius: 20px;
   box-shadow: 0 12px 35px rgba(0,0,0,0.2);
   background: url('images/card4.jpeg') no-repeat center center;
-  background-size: cover;
+  background-size: contain; /* ensure full image visible */
+  background-color: #fff;
   margin: 5px;
   padding: 5px;
 }
@@ -44,7 +44,7 @@ body {
   margin-top: 20px;
 }
 
-/* Registry button */
+/* Registry button and RSVP row */
 .rsvp-row {
   display: flex;
   gap: 15px;
@@ -107,23 +107,31 @@ button[type="submit"]:hover {
 /* Hidden fields */
 .hidden { display: none; }
 
-/* Thank-you message */
-#thankyou {
+/* Status messages */
+#status-message, #thankyou {
   display: none;
   margin-top: 12px;
   padding: 12px;
-  background: #eaf7ea;
   border-radius: 8px;
-  color: #2b662b;
   font-weight: bold;
   text-align: center;
+}
+
+#status-message {
+  background: #fff3cd;
+  color: #856404;
+}
+
+#thankyou {
+  background: #eaf7ea;
+  color: #2b662b;
 }
 
 /* Responsive tweaks */
 @media (max-width: 500px) {
   .card { 
     width: 90vw;
-    height: calc(90vw * (1000 / 566));
+    height: calc(90vw * (1000 / 566)); 
   }
   .rsvp-container { padding: 10px; }
 }
@@ -165,6 +173,7 @@ button[type="submit"]:hover {
     </form>
   </div>
 
+  <div id="status-message">Submitting your RSVP...</div>
   <div id="thankyou">Thank you — your RSVP has been recorded!</div>
 </div>
 
@@ -187,12 +196,16 @@ function updateVisibility(){
 attendance.addEventListener('change', updateVisibility);
 updateVisibility();
 
-// Submit form via fetch and show thank-you message
+// Submit form via fetch with transitional message
 const form = document.getElementById('rsvpForm');
+const statusMessage = document.getElementById('status-message');
 const thankyou = document.getElementById('thankyou');
 
 form.addEventListener('submit', function(e){
   e.preventDefault();
+  statusMessage.style.display = 'block';
+  thankyou.style.display = 'none';
+
   const data = new FormData(form);
 
   fetch(form.action, {
@@ -201,12 +214,13 @@ form.addEventListener('submit', function(e){
     mode: 'no-cors'
   })
   .then(() => {
-    // Show thank-you message
+    statusMessage.style.display = 'none';
     thankyou.style.display = 'block';
-    // Disable form inputs
-    Array.from(form.elements).forEach(el => el.disabled = true);
+    form.reset();
+    updateVisibility();
   })
   .catch(err => {
+    statusMessage.style.display = 'none';
     alert("There was a problem submitting your RSVP. Please try again.");
     console.error(err);
   });
