@@ -23,7 +23,7 @@ body {
 .card {
   width: 100%;                 /* full width */
   max-width: 700px;            /* limits width on desktop */
-  height: 700px;                /* height adjusts to image */
+  height: 800px;                /* height adjusts to image */
   aspect-ratio: 16/9;          /* keeps image proportion correct */
   border-radius: 20px;
   box-shadow: 0 12px 35px rgba(0,0,0,0.2);
@@ -36,7 +36,7 @@ body {
 @media (max-width: 500px) {
   .card {
     width: 100vw;             /* full width of screen */
-    height: auto;
+    aspect-ratio: auto;
   }
 }
 
