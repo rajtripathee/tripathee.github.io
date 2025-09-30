@@ -21,8 +21,7 @@ body {
 
 /* Card image */
 .card {
-  width: 100%;                 /* full width */
-  max-width: 566px;            /* limits width on desktop */
+  width: 566px;                 /* full width */
   height: 1000px;                /* height adjusts to image */
   /* aspect-ratio: 16/9;          keeps image proportion correct */
   border-radius: 20px;
@@ -106,7 +105,10 @@ button[type="submit"]:hover {
 
 /* Responsive tweaks */
 @media (max-width: 500px) {
-  /*.card { height: 100vw; }*/
+  .card { 
+    width: 90vw;
+    height: calc(90vw * (1000 / 566)); 
+}
   .rsvp-container { padding: 5px; }
 }
 </style>
