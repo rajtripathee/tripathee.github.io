@@ -21,20 +21,24 @@ body {
 
 /* Card image */
 .card {
-  width: 70vw;       /* 60% of viewport width */
-  height: 90vh;      /* 50% of viewport height */
-  max-width: 700px;  /* optional max-width to avoid being too wide */
+  width: 100%;                 /* full width */
+  max-width: 700px;            /* limits width on desktop */
+  height: auto;                /* height adjusts to image */
+  aspect-ratio: 16/9;          /* keeps image proportion correct */
   border-radius: 20px;
   box-shadow: 0 12px 35px rgba(0,0,0,0.2);
   background: url('images/card3.jpeg') no-repeat center center;
-  background-size: cover;
+  background-size: contain;    /* ensures entire image is visible */
   margin-bottom: 40px;
 }
 
+/* Mobile adjustments */
 @media (max-width: 500px) {
   .card {
-    width: 90vw;     /* almost full screen width */
-    height: 100vh;    /* smaller height on mobile */
+    width: 100vw;             /* full width of screen */
+    height: auto;
+    aspect-ratio: 16/9;       /* keeps image proportional */
+    border-radius: 0;         /* optional */
   }
 }
 
