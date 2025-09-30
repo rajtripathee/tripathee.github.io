@@ -111,6 +111,20 @@ button[type="submit"]:hover {
 }
   .rsvp-container { padding: 5px; }
 }
+.rsvp-row {
+  display: flex;
+  gap: 15px;               /* space between button and form */
+  flex-wrap: wrap;         /* wrap on smaller screens */
+  align-items: flex-start; /* top align the form and button */
+}
+
+.rsvp-row form {
+  flex: 1;                 /* form takes remaining space */
+}
+
+a.registry {
+  flex-shrink: 0;          /* keep button size */
+}
 </style>
 </head>
 <body>
@@ -120,11 +134,11 @@ button[type="submit"]:hover {
 
 <!-- RSVP Form Container -->
 <div class="rsvp-container">
-  <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
-  <h3 style="text-align:center; margin-bottom:5px;">RSVP</h3>
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-
-  <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbxykXP626vY0K-MvtWrLpTZ0Y4mKYo-A181ZieWQMjS7mgkF1KuX2I91n4G9Sx3otDe3Q/exec" method="POST" target="hidden_iframe">
+  <div class="rsvp-row">
+    <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
+    
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <form id="rsvp-row form" action="https://script.google.com/macros/s/AKfycbxykXP626vY0K-MvtWrLpTZ0Y4mKYo-A181ZieWQMjS7mgkF1KuX2I91n4G9Sx3otDe3Q/exec" method="POST" target="hidden_iframe">
     <label>Will you attend?</label>
     <select id="attendance" name="attendance" required>
       <option value="">-- Please choose --</option>
@@ -148,7 +162,7 @@ button[type="submit"]:hover {
 
     <button type="submit">Submit RSVP</button>
   </form>
-
+  </div>
   <div id="thankyou" style="display:none; margin-top:12px; padding:12px; background:#eaf7ea; border-radius:8px; color:#2b662b; font-weight:bold; text-align:center;">
     Thank you — your RSVP has been recorded!
   </div>
