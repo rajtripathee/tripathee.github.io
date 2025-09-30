@@ -9,10 +9,8 @@
 body {
   margin: 0;
   font-family: 'Georgia', serif;
-  /* Lighter background with white overlay */
-  background: 
-    linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
-    url('images/babyshowerbackground.jpeg') no-repeat center center fixed;
+  /* lighter background using semi-transparent overlay */
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url('images/babyshowerbackground.jpeg') no-repeat center center fixed;
   background-size: cover;
   color: #3e3a39;
   display: flex;
@@ -24,53 +22,56 @@ body {
 
 /* Card image */
 .card {
-  width: 566px;                 /* full width */
-  height: 1000px;                /* height adjusts to image */
-  /* aspect-ratio: 16/9;          keeps image proportion correct */
+  width: 566px;
+  height: 1000px;
   border-radius: 20px;
   box-shadow: 0 12px 35px rgba(0,0,0,0.2);
   background: url('images/card4.jpeg') no-repeat center center;
-  background-size: cover;    /* ensures entire image is visible */
-  background-clip: padding-box;
-  
+  background-size: cover;
   margin: 5px;
   padding: 5px;
 }
 
-
-
-a.registry {
-    display: inline-block;
-    margin: 5px 0;
-    padding: 12px 25px;
-    background: #786c3b; /* warm brown */
-    color: #fff;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: background 0.3s;
-    position: relative;
-    z-index: 1;
-}
-a.registry:hover {
-    background: #a67f59; /* darker brown */
-}
-
-/* RSVP container */
+/* RSVP & Registry Container */
 .rsvp-container {
   width: 100%;
   max-width: 566px;
-  background: rgba(255,255,255,0.9); /* optional light background */
-  padding: 10px;
+  background: rgba(255,255,255,0.9);
+  padding: 15px;
   border-radius: 20px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-  font-size: 0.9em;            /* slightly smaller text */
+  font-size: 0.9em;
+  margin-top: 20px;
+}
+
+/* Registry button */
+.rsvp-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+a.registry {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #786c3b;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 20px; /* oval corners */
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+a.registry:hover {
+  background: #a67f59;
 }
 
 /* Form styling */
 form {
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 label {
@@ -103,30 +104,28 @@ button[type="submit"]:hover {
   background: #a67f59;
 }
 
-/* Hidden fields logic */
+/* Hidden fields */
 .hidden { display: none; }
+
+/* Thank-you message */
+#thankyou {
+  display: none;
+  margin-top: 12px;
+  padding: 12px;
+  background: #eaf7ea;
+  border-radius: 8px;
+  color: #2b662b;
+  font-weight: bold;
+  text-align: center;
+}
 
 /* Responsive tweaks */
 @media (max-width: 500px) {
   .card { 
     width: 90vw;
-    height: calc(90vw * (1000 / 566)); 
-}
-  .rsvp-container { padding: 5px; }
-}
-.rsvp-row {
-  display: flex;
-  gap: 15px;               /* space between button and form */
-  flex-wrap: wrap;         /* wrap on smaller screens */
-  align-items: flex-start; /* top align the form and button */
-}
-
-.rsvp-row form {
-  flex: 1;                 /* form takes remaining space */
-}
-
-a.registry {
-  flex-shrink: 0;          /* keep button size */
+    height: calc(90vw * (1000 / 566));
+  }
+  .rsvp-container { padding: 10px; }
 }
 </style>
 </head>
@@ -135,40 +134,38 @@ a.registry {
 <!-- Decorative Card -->
 <div class="card"></div>
 
-<!-- RSVP Form Container -->
+<!-- RSVP Container -->
 <div class="rsvp-container">
   <div class="rsvp-row">
     <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
-    
-    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
-    <form id="rsvp-row form" action="https://script.google.com/macros/s/AKfycbxykXP626vY0K-MvtWrLpTZ0Y4mKYo-A181ZieWQMjS7mgkF1KuX2I91n4G9Sx3otDe3Q/exec" method="POST" target="hidden_iframe">
-    <label>Will you attend?</label>
-    <select id="attendance" name="attendance" required>
-      <option value="">-- Please choose --</option>
-      <option value="Yes">Yes</option>
-      <option value="No">No</option>
-    </select>
 
-    <div id="yesFields" class="hidden">
-      <label for="nameYes">Your Name:</label>
-      <input type="text" id="nameYes" name="nameYes" placeholder="Full name" required>
-      <label for="guests">Number of People Attending:</label>
-      <input type="number" id="guests" name="guests" min="1" placeholder="1">
-    </div>
+    <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbxykXP626vY0K-MvtWrLpTZ0Y4mKYo-A181ZieWQMjS7mgkF1KuX2I91n4G9Sx3otDe3Q/exec" method="POST">
+      <label>Will you attend?</label>
+      <select id="attendance" name="attendance" required>
+        <option value="">-- Please choose --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
 
-    <div id="noFields" class="hidden">
-      <label for="nameNo">Your Name:</label>
-      <input type="text" id="nameNo" name="nameNo" placeholder="Full name" required>
-      <label for="message">Message:</label>
-      <textarea name="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
-    </div>
+      <div id="yesFields" class="hidden">
+        <label for="nameYes">Your Name:</label>
+        <input type="text" id="nameYes" name="nameYes" placeholder="Full name" required>
+        <label for="guests">Number of People Attending:</label>
+        <input type="number" id="guests" name="guests" min="1" placeholder="1">
+      </div>
 
-    <button type="submit">Submit RSVP</button>
-  </form>
+      <div id="noFields" class="hidden">
+        <label for="nameNo">Your Name:</label>
+        <input type="text" id="nameNo" name="nameNo" placeholder="Full name" required>
+        <label for="message">Message:</label>
+        <textarea name="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
+      </div>
+
+      <button type="submit">Submit RSVP</button>
+    </form>
   </div>
-  <div id="thankyou" style="display:none; margin-top:12px; padding:12px; background:#eaf7ea; border-radius:8px; color:#2b662b; font-weight:bold; text-align:center;">
-    Thank you — your RSVP has been recorded!
-  </div>
+
+  <div id="thankyou">Thank you — your RSVP has been recorded!</div>
 </div>
 
 <script>
@@ -187,26 +184,32 @@ function updateVisibility(){
   if(attendance.value === 'Yes'){ yesFields.classList.remove('hidden'); nameYes.required=true; }
   if(attendance.value === 'No'){ noFields.classList.remove('hidden'); nameNo.required=true; }
 }
-
 attendance.addEventListener('change', updateVisibility);
 updateVisibility();
 
-// Show thank-you message after submit
+// Submit form via fetch and show thank-you message
 const form = document.getElementById('rsvpForm');
-const iframe = document.getElementById('hidden_iframe');
 const thankyou = document.getElementById('thankyou');
-let justSubmitted = false;
 
-form.addEventListener('submit', function(){ justSubmitted = true; });
-iframe.addEventListener('load', function(){
-  if(!justSubmitted) return;
-  justSubmitted = false;
-  setTimeout(()=> {
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  const data = new FormData(form);
+
+  fetch(form.action, {
+    method: 'POST',
+    body: data,
+    mode: 'no-cors'
+  })
+  .then(() => {
+    // Show thank-you message
     thankyou.style.display = 'block';
-    form.reset();
-    updateVisibility();
-    setTimeout(()=> { thankyou.style.display = 'none'; }, 4000);
-  }, 250);
+    // Disable form inputs
+    Array.from(form.elements).forEach(el => el.disabled = true);
+  })
+  .catch(err => {
+    alert("There was a problem submitting your RSVP. Please try again.");
+    console.error(err);
+  });
 });
 </script>
 
