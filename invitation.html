@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Shower Invitation</title>
+<style>
+/* Body & page layout */
+body {
+  margin: 0;
+  font-family: 'Georgia', serif;
+  background: linear-gradient(rgba(255,255,255,0.3), rgba(255,255,255,0.3)), url('images/babyshowerbackground.jpeg') no-repeat center center fixed;
+  background-size: cover;
+  color: #3e3a39;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+/* Card image */
+.card {
+  width: 566px;
+  height: 1000px;
+  border-radius: 20px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.2);
+  background: url('images/Invitation_draft2.jpeg') no-repeat center center;
+  background-size: contain; /* ensure full image visible */
+  background-color: #fff;
+  margin: 5px;
+  padding: 5px;
+}
+
+/* RSVP & Registry Container */
+.rsvp-container {
+  width: 100%;
+  max-width: 566px;
+  background: rgba(255,255,255,0.9);
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  font-size: 0.9em;
+  margin-top: 20px;
+}
+
+/* Registry button and RSVP row */
+.rsvp-row {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+a.registry {
+  display: inline-block;
+  padding: 12px 25px;
+  background: #786c3b;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 20px; /* oval corners */
+  transition: background 0.3s;
+  flex-shrink: 0;
+}
+a.registry:hover {
+  background: #a67f59;
+}
+
+/* Form styling */
+form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+label {
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+input, select, textarea {
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+button[type="submit"] {
+  background: #786c3b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  padding: 12px 25px;
+  font-size: 1em;
+  border-radius: 8px;
+  transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+  background: #a67f59;
+}
+
+/* Hidden fields */
+.hidden { display: none; }
+
+/* Status messages */
+#status-message, #thankyou {
+  display: none;
+  margin-top: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#status-message {
+  background: #fff3cd;
+  color: #856404;
+}
+
+#thankyou {
+  background: #eaf7ea;
+  color: #2b662b;
+}
+
+/* Responsive tweaks */
+@media (max-width: 500px) {
+  .card { 
+    width: 90vw;
+    height: calc(90vw * (1000 / 566)); 
+  }
+  .rsvp-container { padding: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Decorative Card -->
+<div class="card"></div>
+
+
+<!-- RSVP Container -->
+<div class="rsvp-container">
+  <div class="rsvp-row">
+    <a href="https://www.amazon.com/baby-reg/pemalaraj-tripathee-december-2025-carlsbad/2JIOG3FZOQM0" class="registry" target="_blank">View Baby Registry</a>
+
+    <form id="rsvpForm" action="https://script.google.com/macros/s/AKfycbxykXP626vY0K-MvtWrLpTZ0Y4mKYo-A181ZieWQMjS7mgkF1KuX2I91n4G9Sx3otDe3Q/exec" method="POST">
+      <label>Will you attend?</label>
+      <select id="attendance" name="attendance" required>
+        <option value="">-- Please choose --</option>
+        <option value="Yes">Yes</option>
+        <option value="No">No</option>
+      </select>
+
+      <div id="yesFields" class="hidden">
+        <label for="nameYes">Your Name:</label>
+        <input type="text" id="nameYes" name="nameYes" placeholder="Full name" required>
+        <label for="guests">Number of People Attending:</label>
+        <input type="number" id="guests" name="guests" min="1" placeholder="1">
+      </div>
+
+      <div id="noFields" class="hidden">
+        <label for="nameNo">Your Name:</label>
+        <input type="text" id="nameNo" name="nameNo" placeholder="Full name" required>
+        <label for="message">Message:</label>
+        <textarea name="message" rows="3" placeholder="Sorry we can't make it, sending love!"></textarea>
+      </div>
+
+      <button type="submit">Submit RSVP by Oct 8</button>
+    </form>
+  </div>
+
+  <div id="status-message">Submitting your RSVP...</div>
+  <div id="thankyou">Thank you — your RSVP has been recorded!</div>
+</div>
+
+*/
+<script>
+// Toggle visibility of Yes/No fields
+const attendance = document.getElementById('attendance');
+const yesFields = document.getElementById('yesFields');
+const noFields = document.getElementById('noFields');
+const nameYes = document.getElementById('nameYes');
+const nameNo = document.getElementById('nameNo');
+
+function updateVisibility(){
+  yesFields.classList.add('hidden');
+  noFields.classList.add('hidden');
+  nameYes.required = false;
+  nameNo.required = false;
+  if(attendance.value === 'Yes'){ yesFields.classList.remove('hidden'); nameYes.required=true; }
+  if(attendance.value === 'No'){ noFields.classList.remove('hidden'); nameNo.required=true; }
+}
+attendance.addEventListener('change', updateVisibility);
+updateVisibility();
+
+// Submit form via fetch with transitional message
+const form = document.getElementById('rsvpForm');
+const statusMessage = document.getElementById('status-message');
+const thankyou = document.getElementById('thankyou');
+
+form.addEventListener('submit', function(e){
+  e.preventDefault();
+  statusMessage.style.display = 'block';
+  thankyou.style.display = 'none';
+
+  const data = new FormData(form);
+
+  fetch(form.action, {
+    method: 'POST',
+    body: data,
+    mode: 'no-cors'
+  })
+  .then(() => {
+    statusMessage.style.display = 'none';
+    thankyou.style.display = 'block';
+    form.reset();
+    updateVisibility();
+  })
+  .catch(err => {
+    statusMessage.style.display = 'none';
+    alert("There was a problem submitting your RSVP. Please try again.");
+    console.error(err);
+  });
+});
+</script>
+
+</body>
+</html>
